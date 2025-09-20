@@ -13,9 +13,11 @@ function Checkout() {
 
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
 
+  const functionUrl = "https://us-central1-paymentpage-2f2d9.cloudfunctions.net/app";
+
   const handlePayment = async () => {
     try {
-      const res = await fetch("http://localhost:5000/create-payment", {
+      const res = await fetch(`${functionUrl}/create-payment`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -36,7 +38,7 @@ function Checkout() {
   const checkPayment = async () => {
     if (!lowProfileId) return;
     try {
-      const res = await fetch("http://localhost:5000/check-payment", {
+      const res = await fetch(`${functionUrl}/check-payment`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ LowProfileId: lowProfileId }),
