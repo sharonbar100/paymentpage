@@ -1,0 +1,28 @@
+.navbar {
+  background-color: #333;
+  padding: 1rem 2rem;
+  color: #fff;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.navLinks {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.navLink {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.navLink:hover {
+  color: #a0c4ff;
+}
+
+.container {
+  padding: 2rem;
+}
