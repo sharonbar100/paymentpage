@@ -1,10 +1,10 @@
 .navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #333;
   padding: 1rem 2rem;
-  color: #fff;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  color: white;
 }
 
 .navLinks {
@@ -13,16 +13,19 @@
 }
 
 .navLink {
-  color: #fff;
+  color: white;
   text-decoration: none;
-  font-weight: bold;
+  font-size: 1.1rem;
+  font-weight: 500;
   transition: color 0.3s ease;
 }
 
 .navLink:hover {
-  color: #a0c4ff;
+  color: #61dafb;
 }
 
 .container {
   padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }

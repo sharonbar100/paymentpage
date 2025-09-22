@@ -13,6 +13,11 @@ function ProductCard({ product }) {
 
   return (
     <div className={styles.productCard}>
+      <img
+        src={product.imageUrl}
+        alt={product.name}
+        className={styles.productImage}
+      />
       <h3>{product.name}</h3>
       <p className={styles.price}>{product.price} ₪</p>
       <button

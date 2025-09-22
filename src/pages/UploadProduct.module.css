@@ -1,6 +1,12 @@
-.uploadContainer {
-  max-width: 600px;
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 800px;
   margin: 0 auto;
+}
+
+.formSection {
   padding: 2rem;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
@@ -56,4 +62,110 @@
 
 .uploadButton:hover {
   background-color: #15803d;
+}
+
+.listSection {
+  padding: 2rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.productsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.productItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.productImage {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.productDetails {
+  flex-grow: 1;
+}
+
+.editForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-grow: 1;
+}
+
+.editForm input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.editBtn,
+.deleteBtn,
+.saveBtn,
+.cancelBtn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
+}
+
+.editBtn {
+  background-color: #2563eb;
+  color: white;
+}
+
+.editBtn:hover {
+  background-color: #1d4ed8;
+}
+
+.deleteBtn {
+  background-color: #ef4444;
+  color: white;
+}
+
+.deleteBtn:hover {
+  background-color: #dc2626;
+}
+
+.saveBtn {
+  background-color: #16a34a;
+  color: white;
+}
+
+.saveBtn:hover {
+  background-color: #15803d;
+}
+
+.cancelBtn {
+  background-color: #9ca3af;
+  color: white;
+}
+
+.cancelBtn:hover {
+  background-color: #6b7280;
 }
