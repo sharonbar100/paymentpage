@@ -29,3 +29,32 @@
   max-width: 1200px;
   margin: 0 auto;
 }
+
+.authButtons {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.authBtn {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.authBtn:hover {
+  background-color: #1d4ed8;
+}
+
+.loggedIn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+}

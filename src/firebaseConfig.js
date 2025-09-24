@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -11,13 +12,15 @@ const firebaseConfig = {
   storageBucket: "paymentpage-2f2d9.firebasestorage.app",
   messagingSenderId: "1053802324174",
   appId: "1:1053802324174:web:da8e2cdc8ec87b752cf09f",
-  measurementId: "G-ENKY8VZTVM"
+  measurementId: "G-ENKY8VZTVM",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getFirestore(app);
-const storage = getStorage(app); // Initialize Firebase Storage and export it
+const storage = getStorage(app);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
-export { app, analytics, db, storage };
+export { app, analytics, db, storage, auth, provider };

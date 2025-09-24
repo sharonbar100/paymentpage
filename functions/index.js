@@ -1,22 +1,17 @@
-// functions/index.js
 import express from "express";
 import cors from "cors";
 
 import { onRequest } from "firebase-functions/v2/https";
 import { setGlobalOptions } from "firebase-functions/v2";
-// <-- correct import for secret/param helpers:
 import { defineSecret } from "firebase-functions/params";
 import * as logger from "firebase-functions/logger";
 
-// Set global options for your functions
 setGlobalOptions({ maxInstances: 10 });
 
-// The `expressApp` will be the one we use for routing
 const expressApp = express();
 expressApp.use(cors());
 expressApp.use(express.json());
 
-// Define the secrets to be loaded from Google Cloud Secret Manager
 const TERMINAL_NUMBER = defineSecret("TERMINAL_NUMBER");
 const API_NAME = defineSecret("API_NAME");
 
@@ -27,34 +22,26 @@ expressApp.post("/create-payment", async (req, res) => {
 
     let productName = "Cart Purchase";
     if (Array.isArray(cart) && cart.length > 0) {
-      productName = cart
-        .map((item) => `${item.name} x${item.qty}`)
-        .join(", ");
+      productName = cart.map((item) => `${item.name} x${item.qty}`).join(", ");
     }
 
-    const UIDefinition = {
-      CardOwnerNameValue: "Test User",
-      CardOwnerIdValue: "1111111",
-      CardOwnerEmailValue: "test@test.com",
-      CardOwnerPhoneValue: "0521234567",
-      CustomFields: [
-        { Id: 1, Value: "Test Value 1" },
-        { Id: 2, Value: "Test Value 2" }
-      ]
-    };
+    const orderId = `ORDER-${Date.now()}`;
+
+    // Corrected URLs with {LowProfileId} placeholder (CardCom will replace it)
+    const successUrl = "https://paymentpage-2f2d9.web.app/success-iframe?LowProfileId={LowProfileId}";
+    const failedUrl = "https://paymentpage-2f2d9.web.app/error-iframe?LowProfileId={LowProfileId}";
 
     const payload = {
-      TerminalNumber: TERMINAL_NUMBER.value(), // secret value
-      ApiName: API_NAME.value(),               // secret value
+      TerminalNumber: TERMINAL_NUMBER.value(),
+      ApiName: API_NAME.value(),
       Amount: amount,
       ISOCoinId: 1,
       Operation: "ChargeOnly",
-      SuccessRedirectUrl: "https://paymentpage-2f2d9.web.app/success",
-      FailedRedirectUrl: "https://paymentpage-2f2d9.web.app/error",
       ProductName: productName,
-      ReturnValue: "ORDER-1234",
+      ReturnValue: orderId,
       Language: "he",
-      UIDefinition: UIDefinition
+      SuccessRedirectUrl: successUrl,
+      FailedRedirectUrl: failedUrl,
     };
 
     logger.info("➡️ Sending payload to Cardcom:", payload);
@@ -72,8 +59,9 @@ expressApp.post("/create-payment", async (req, res) => {
     logger.info("✅ Cardcom response for Create:", data);
 
     res.json({
-      url: data.Url,
-      lowProfileId: data.LowProfileId,
+      url: data.Url,             // payment page URL
+      lowProfileId: data.LowProfileId, // real LowProfileId
+      orderId,
       raw: data,
     });
   } catch (error) {
@@ -86,6 +74,10 @@ expressApp.post("/create-payment", async (req, res) => {
 expressApp.post("/check-payment", async (req, res) => {
   try {
     const { LowProfileId } = req.body;
+
+    if (!LowProfileId) {
+      return res.status(400).json({ error: "Missing LowProfileId" });
+    }
 
     const payload = {
       TerminalNumber: TERMINAL_NUMBER.value(),
@@ -114,7 +106,6 @@ expressApp.post("/check-payment", async (req, res) => {
   }
 });
 
-// Bind the secrets to the function so they are available at runtime
 export const app = onRequest(
   { secrets: [TERMINAL_NUMBER, API_NAME] },
   expressApp
