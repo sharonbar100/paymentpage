@@ -5,7 +5,6 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import UploadProduct from "./pages/UploadProduct";
 import SuccessPage from "./pages/SuccessPage";
-import SuccessPageIframe from "./pages/SuccessPageIframe";
 import ErrorPage from "./pages/ErrorPage";
 import Login from "./pages/Login";
 import PurchaseHistory from "./pages/PurchaseHistory";
@@ -31,7 +30,7 @@ export default function AppLayout() {
   }, []);
 
   // Hide navbar on certain pages
-  const hideNavbarRoutes = ["/success-iframe"];
+  const hideNavbarRoutes = ["/success"];
   const hideNavbar = hideNavbarRoutes.includes(location.pathname);
 
   // Login / logout functions
@@ -58,6 +57,9 @@ export default function AppLayout() {
     <>
       {!hideNavbar && (
         <nav className={styles.navbar}>
+          <Link to="/" className={styles.logo}>
+            Test Shop 🛍️
+          </Link>
           <div className={styles.navLinks}>
             <Link to="/" className={styles.navLink}>
               Products
@@ -78,7 +80,7 @@ export default function AppLayout() {
           <div className={styles.authButtons}>
             {user ? (
               <div className={styles.loggedIn}>
-                <span>Hello, {user.displayName}</span>
+                <span>Hello, {user.displayName?.split(" ")[0] || "User"}</span>
                 <button onClick={logout} className={styles.authBtn}>
                   Logout
                 </button>
@@ -98,8 +100,7 @@ export default function AppLayout() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/upload" element={<UploadProduct />} />
-          <Route path="/success" element={<SuccessPage />} />
-          <Route path="/success-iframe" element={<SuccessPageIframe user={user} />} />
+          <Route path="/success" element={<SuccessPage user={user} />} />
           <Route path="/error" element={<ErrorPage />} />
           <Route path="/login" element={<Login user={user} setUser={setUser} />} />
           <Route path="/history" element={<PurchaseHistory user={user} />} />

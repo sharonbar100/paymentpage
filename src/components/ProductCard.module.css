@@ -1,46 +1,61 @@
 .productCard {
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid #e0e0e0; /* Adding a subtle border */
+  border-radius: 12px;
+  padding: 1.25rem; /* Slightly reduced padding to look cleaner */
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* Very light shadow for depth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start; /* **Aligning content to the start (left) for a professional look** */
+  text-align: left; /* **Aligning text to the left** */
 }
 
 .productCard:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px); /* Reduced lift */
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.1); /* Slightly more visible shadow on hover */
+  border-color: #3498db; /* Highlight border color on hover */
 }
 
 .productImage {
   width: 100%;
-  height: 200px; /* Adjust height as needed */
-  object-fit: contain; /* Prevents image from being cropped or stretched */
+  max-height: 220px; /* Slightly taller images */
+  object-fit: contain;
   margin-bottom: 1rem;
+  border-radius: 8px; /* Slightly round the image corners */
+}
+
+.productCard h3 {
+  font-size: 1.4rem;
+  color: #2c3e50; /* Darker heading color */
+  margin-bottom: 0.3rem;
+  font-weight: 600;
 }
 
 .price {
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: #333;
-  margin: 0.5rem 0 1rem;
+  font-size: 1.6rem; /* Prominent price */
+  font-weight: 700;
+  color: #2ecc71; /* Using the friendly green for the price */
+  margin: 0.5rem 0 1.25rem;
+  width: 100%; /* Ensures price is full width */
 }
 
 .addToCartBtn {
-  background-color: #2563eb;
+  background-color: #3498db; /* Switching back to the primary blue for action */
   color: white;
   padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px; /* Less aggressive rounding for a serious look */
   cursor: pointer;
   font-size: 1rem;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
+  font-weight: 600;
+  letter-spacing: normal;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  width: 100%; /* Full width button */
+  max-width: none; /* Allows it to take up all available width */
 }
 
 .addToCartBtn:hover {
-  background-color: #1d4ed8;
+  background-color: #2980b9;
+  transform: none; /* Removing the lift for the button itself, keeping it on the card */
 }

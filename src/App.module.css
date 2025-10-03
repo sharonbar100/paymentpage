@@ -1,60 +1,92 @@
 .navbar {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  background-color: #333;
-  padding: 1rem 2rem;
+  background-color: #2c3e50;
+  padding: 1rem 3rem;
   color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ecf0f1;
+  text-decoration: none;
 }
 
 .navLinks {
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
+  flex-grow: 1;
+  margin-left: 2rem;
 }
 
 .navLink {
-  color: white;
+  color: #ecf0f1;
   text-decoration: none;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 500;
-  transition: color 0.3s ease;
+  padding: 0.5rem 0;
+  transition: color 0.3s ease; /* Only transitioning color now */
+  position: relative; /* Essential for positioning the ::after element */
+}
+
+/* New smooth underline styles */
+.navLink::after {
+  content: "";
+  position: absolute;
+  width: 0; /* Start with zero width (invisible) */
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #3498db;
+  transition: width 0.3s ease-out; /* Smooth transition for the width change */
 }
 
 .navLink:hover {
-  color: #61dafb;
+  color: #3498db;
+  /* Removed border-bottom styling */
 }
 
+.navLink:hover::after {
+  width: 100%; /* Expand to full width on hover */
+}
+/* End of new smooth underline styles */
+
 .container {
-  padding: 2rem;
+  padding: 2.5rem;
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .authButtons {
-  margin-left: auto;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .authBtn {
-  background-color: #2563eb;
+  background-color: #3498db;
   color: white;
   border: none;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  padding: 0.6rem 1.2rem;
   cursor: pointer;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
 .authBtn:hover {
-  background-color: #1d4ed8;
+  background-color: #2980b9;
+  transform: translateY(-1px);
 }
 
 .loggedIn {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  color: white;
+  gap: 1rem;
+  color: #ecf0f1;
+  font-weight: 500;
 }

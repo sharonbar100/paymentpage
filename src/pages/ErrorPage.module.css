@@ -3,37 +3,43 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 80vh;
+  min-height: 60vh; /* Reduced height to be less intrusive */
   text-align: center;
-  background-color: #fef2f2;
-  color: #dc2626;
-  padding: 2rem;
-  border-radius: 8px;
-  max-width: 600px;
-  margin: 2rem auto;
+  background-color: #fff0f0; /* Soft red background */
+  color: #991b1b; /* Dark red text */
+  padding: 3rem;
+  border-radius: 12px;
+  max-width: 650px;
+  margin: 3rem auto;
+  box-shadow: 0 10px 25px rgba(220, 38, 38, 0.1);
+  border: 2px solid #dc2626; /* Clear error border */
 }
 
 .container h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  color: #dc2626;
 }
 
 .container p {
   font-size: 1.2rem;
-  margin-bottom: 2rem;
-  color: #333;
+  margin-bottom: 2.5rem;
+  color: #4a4a4a;
+  line-height: 1.5;
 }
 
 .link {
   background-color: #dc2626;
   color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: 5px;
+  padding: 1rem 2rem;
+  border-radius: 8px;
   text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
 .link:hover {
   background-color: #b91c1c;
+  transform: translateY(-1px);
 }

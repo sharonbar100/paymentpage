@@ -1,15 +1,34 @@
 .checkoutContainer {
   max-width: 800px;
   margin: 0 auto;
-  padding: 2rem;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  padding: 2.5rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+.pageTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 2rem;
+  border-bottom: 3px solid #3498db;
+  padding-bottom: 0.5rem;
 }
 
 .summarySection {
   margin-bottom: 2rem;
+  padding: 1.5rem;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  background-color: #fcfcfc;
+}
+
+.summaryTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1rem;
 }
 
 .summaryList {
@@ -19,34 +38,34 @@
 }
 
 .summaryList li {
-  padding: 0.5rem 0;
-  border-bottom: 1px dashed #e0e0e0;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #eee; /* Solid subtle divider */
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+}
+
+.summaryItemName {
+  flex-grow: 1;
+  font-weight: 500;
+}
+
+.summaryItemQuantity {
+  margin-right: 1rem;
+  color: #7f8c8d;
+}
+
+.summaryItemPrice {
+  font-weight: 700;
+  color: #2ecc71;
 }
 
 .totalAmount {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   margin-top: 1.5rem;
-}
-
-.paymentButton {
-  padding: 1rem 2rem;
-  background-color: #2563eb;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.paymentButton:disabled {
-  background-color: #9ca3af;
-  cursor: not-allowed;
-}
-
-.paymentButton:hover:enabled {
-  background-color: #1d4ed8;
+  text-align: right;
+  font-weight: 700;
+  color: #2c3e50;
 }
 
 .iframeWrapper {
@@ -54,7 +73,9 @@
   position: relative;
   overflow: hidden;
   width: 100%;
-  height: 800px; /* Set a fixed height for the wrapper */
+  height: 800px;
+  border: 2px solid #3498db; /* Highlight the iframe boundary */
+  border-radius: 8px;
 }
 
 .paymentIframe {
@@ -68,31 +89,58 @@
   border: 0;
 }
 
-.statusSection {
-  margin-top: 2rem;
-}
-
 .statusMessage {
   padding: 1.5rem;
   border-radius: 8px;
   line-height: 1.6;
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eaf3f9;
+  color: #2980b9;
+  margin-bottom: 2rem;
 }
 
+/* Spinner Animation for Loading */
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  margin-right: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+/* End Spinner */
+
 .success {
-  background-color: #dcfce7;
-  color: #166534;
+  background-color: #e6ffe6; /* Lighter success green */
+  color: #16a34a;
 }
 
 .failure {
-  background-color: #fee2e2;
-  color: #991b1b;
+  background-color: #ffe6e6; /* Lighter failure red */
+  color: #ef4444;
 }
 
 .backButton {
-  background-color: #4caf50;
+  background-color: #3498db;
   color: white;
-  padding: 10px;
+  padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.backButton:hover {
+  background-color: #2980b9;
 }

@@ -4,16 +4,17 @@
   align-items: center;
   justify-content: center;
   min-height: 70vh;
-  font-family: Arial, sans-serif;
-  color: #333;
+  text-align: center;
 }
 
-.loginPage h1 {
-  font-size: 2rem;
+.title {
+  font-size: 3rem;
   margin-bottom: 1rem;
+  color: #2c3e50;
+  font-weight: 800;
 }
 
-.loginPage p {
-  font-size: 1.1rem;
-  color: #555;
+.message {
+  font-size: 1.2rem;
+  color: #7f8c8d;
 }

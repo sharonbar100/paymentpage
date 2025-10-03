@@ -1,8 +1,24 @@
 .container {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
+}
+
+.orderTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 2rem;
+  border-bottom: 3px solid #3498db;
+  padding-bottom: 0.5rem;
+}
+
+.emptyMessage, .infoMessage {
+  font-size: 1.2rem;
+  color: #7f8c8d;
+  text-align: center;
   padding: 2rem;
-  font-family: Arial, sans-serif;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
 }
 
 .orderList {
@@ -14,9 +30,39 @@
 }
 
 .orderItem {
-  padding: 1rem;
+  padding: 1.5rem;
   border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  border-radius: 10px;
   background-color: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.orderHeader {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.orderAmount {
+  font-size: 1.4rem;
+  color: #2ecc71; /* Green for amount */
+  font-weight: 700;
+}
+
+.orderDetailsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  font-size: 1rem;
+  color: #555;
+}
+
+.orderDetailsGrid strong {
+  color: #2c3e50;
+  font-weight: 700;
 }

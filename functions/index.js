@@ -28,8 +28,8 @@ expressApp.post("/create-payment", async (req, res) => {
     const orderId = `ORDER-${Date.now()}`;
 
     // Corrected URLs with {LowProfileId} placeholder (CardCom will replace it)
-    const successUrl = "https://paymentpage-2f2d9.web.app/success-iframe?LowProfileId={LowProfileId}";
-    const failedUrl = "https://paymentpage-2f2d9.web.app/error-iframe?LowProfileId={LowProfileId}";
+    const successUrl = "https://paymentpage-2f2d9.web.app/success?LowProfileId={LowProfileId}";
+    const failedUrl = "https://paymentpage-2f2d9.web.app/error?LowProfileId={LowProfileId}";
 
     const payload = {
       TerminalNumber: TERMINAL_NUMBER.value(),

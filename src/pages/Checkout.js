@@ -50,14 +50,16 @@ function Checkout() {
 
   return (
     <div className={styles.checkoutContainer}>
-      <h1>Checkout</h1>
+      <h1 className={styles.pageTitle}>Secure Checkout</h1>
 
       <div className={styles.summarySection}>
-        <h2>Cart Summary:</h2>
+        <h2 className={styles.summaryTitle}>Order Summary</h2>
         <ul className={styles.summaryList}>
           {cart.map((item, idx) => (
             <li key={idx}>
-              {item.name} ×{item.qty} = {item.price * item.qty} ₪
+              <span className={styles.summaryItemName}>{item.name}</span>
+              <span className={styles.summaryItemQuantity}>×{item.qty}</span>
+              <span className={styles.summaryItemPrice}>{item.price * item.qty} ₪</span>
             </li>
           ))}
         </ul>
@@ -65,7 +67,10 @@ function Checkout() {
       </div>
 
       {loadingPayment && (
-        <div className={styles.statusMessage}>Generating payment link…</div>
+        <div className={styles.statusMessage}>
+          <div className={styles.loader}></div>
+          Generating secure payment link…
+        </div>
       )}
 
       {paymentUrl && (
