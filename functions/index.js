@@ -21,13 +21,11 @@ expressApp.post("/create-payment", async (req, res) => {
   try {
     const { amount, cart } = req.body;
 
-    // 👇️ CRITICAL CHANGE: Determine the correct host for the redirect URLs
     const isEmulator = process.env.FUNCTIONS_EMULATOR === 'true';
     
-    // The base URL for the frontend host
     const frontendHost = isEmulator
-      ? 'http://localhost:3000' // Local React app host
-      : 'https://paymentpage-2f2d9.web.app'; // Live Firebase Hosting domain
+      ? 'http://localhost:3000'
+      : 'https://paymentpage-2f2d9.web.app';
 
     let productName = "Cart Purchase";
     if (Array.isArray(cart) && cart.length > 0) {
@@ -36,7 +34,6 @@ expressApp.post("/create-payment", async (req, res) => {
 
     const orderId = `ORDER-${Date.now()}`;
 
-    // 👇️ Use the dynamic frontendHost for redirects
     const successUrl = `${frontendHost}/success?LowProfileId={LowProfileId}`;
     const failedUrl = `${frontendHost}/error?LowProfileId={LowProfileId}`;
 
@@ -49,8 +46,13 @@ expressApp.post("/create-payment", async (req, res) => {
       ProductName: productName,
       ReturnValue: orderId,
       Language: "he",
-      SuccessRedirectUrl: successUrl, // Dynamic URL
-      FailedRedirectUrl: failedUrl,   // Dynamic URL
+      SuccessRedirectUrl: successUrl,
+      FailedRedirectUrl: failedUrl,
+      
+      // 🔑 CRITICAL FIX: Ensure email is mandatory for guest order attribution
+      UIDefinition: {
+        IsCardOwnerEmailRequired: true, 
+      },
     };
 
     logger.info("➡️ Sending payload to Cardcom:", payload);
@@ -68,8 +70,8 @@ expressApp.post("/create-payment", async (req, res) => {
     logger.info("✅ Cardcom response for Create:", data);
 
     res.json({
-      url: data.Url, // payment page URL
-      lowProfileId: data.LowProfileId, // real LowProfileId
+      url: data.Url,
+      lowProfileId: data.LowProfileId,
       orderId,
       raw: data,
     });
@@ -79,7 +81,7 @@ expressApp.post("/create-payment", async (req, res) => {
   }
 });
 
-// ✅ Endpoint to check the payment status
+// ✅ Endpoint to check the payment status (No change needed here, it returns all data)
 expressApp.post("/check-payment", async (req, res) => {
   try {
     const { LowProfileId } = req.body;
