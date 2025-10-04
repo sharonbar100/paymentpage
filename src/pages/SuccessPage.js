@@ -5,7 +5,10 @@ import styles from "./SuccessPage.module.css";
 import { db } from "../firebaseConfig";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
-function SuccessPageIframe({ user }) {
+// Helper for checking the environment
+const isLocalhost = window.location.hostname === "localhost";
+
+function SuccessPage({ user }) {
   const [searchParams] = useSearchParams();
   const [orderDetails, setOrderDetails] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -17,19 +20,22 @@ function SuccessPageIframe({ user }) {
     lowProfileId = sessionStorage.getItem("lowProfileId");
   }
 
-  const functionUrl =
-    "https://us-central1-paymentpage-2f2d9.cloudfunctions.net/app";
+  // 👇️ CRITICAL CHANGE: Conditional URL for local testing
+  const functionUrl = isLocalhost
+    ? "http://localhost:5001/paymentpage-2f2d9/us-central1/app"
+    : "https://us-central1-paymentpage-2f2d9.cloudfunctions.net/app";
+  // 👆️ CRITICAL CHANGE: Conditional URL for local testing
 
   useEffect(() => {
     const fetchAndSaveOrder = async () => {
       if (!lowProfileId || !user) {
         setLoading(false);
-        // Optional: Set a specific error for missing context
         if (!lowProfileId) setError("Missing transaction ID (LowProfileId). Cannot check payment status.");
         return;
       }
 
       try {
+        // The fetch request now uses the conditional functionUrl
         const res = await fetch(`${functionUrl}/check-payment`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -54,17 +60,13 @@ function SuccessPageIframe({ user }) {
             createdAt: serverTimestamp(),
           });
         } else {
-          // Extract the most specific decline message from the response
           const declineMessage = 
               data.TranzactionInfo?.IssuerAuthCodeDescription || 
               data.TranzactionInfo?.Description || 
               data.Description || 
               "Payment failed or is pending. Please try again.";
               
-          // Use the specific message for the toast notification
           toast.error(declineMessage);
-          
-          // Set the specific error message to display in the main page content
           setError(declineMessage); 
         }
       } catch (err) {
@@ -74,22 +76,20 @@ function SuccessPageIframe({ user }) {
       }
     };
 
+    // Include functionUrl in the dependency array
     fetchAndSaveOrder();
-  }, [lowProfileId, user]);
+  }, [lowProfileId, user, functionUrl]);
 
   if (loading)
     return (
       <div className={styles.successContainer}>
         <div className={styles.statusMessage}>
-          {/* Your loader component/styles would go here */}
           Checking payment status...
         </div>
       </div>
     );
 
-  // If there's an error from the fetch or a non-0 ResponseCode was detected and set to 'error' state
   if (error || orderDetails?.TranzactionInfo?.ResponseCode !== 0) {
-    // If ResponseCode is NOT 0, use the fetched error details, otherwise use the generic fetch error
     const displayMessage = 
         error || 
         orderDetails?.TranzactionInfo?.IssuerAuthCodeDescription || 
@@ -125,7 +125,7 @@ function SuccessPageIframe({ user }) {
       <div className={`${styles.statusMessage} ${styles.success}`}>
         ✅ **התשלום הצליח!**
         <br />
-        סכום: **{(info.Amount / 100).toFixed(2)} ₪** {/* Dividing by 100 for Agorot/Cents */}
+        סכום: **{(info.Amount / 100).toFixed(2)} ₪**
         <br />
         מספר אישור: {info.ApprovalNumber}
         <br />
@@ -143,4 +143,4 @@ function SuccessPageIframe({ user }) {
   );
 }
 
-export default SuccessPageIframe;
+export default SuccessPage;

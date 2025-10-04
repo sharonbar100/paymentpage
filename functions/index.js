@@ -9,6 +9,7 @@ import * as logger from "firebase-functions/logger";
 setGlobalOptions({ maxInstances: 10 });
 
 const expressApp = express();
+// Enable CORS for all origins during development
 expressApp.use(cors());
 expressApp.use(express.json());
 
@@ -20,6 +21,14 @@ expressApp.post("/create-payment", async (req, res) => {
   try {
     const { amount, cart } = req.body;
 
+    // 👇️ CRITICAL CHANGE: Determine the correct host for the redirect URLs
+    const isEmulator = process.env.FUNCTIONS_EMULATOR === 'true';
+    
+    // The base URL for the frontend host
+    const frontendHost = isEmulator
+      ? 'http://localhost:3000' // Local React app host
+      : 'https://paymentpage-2f2d9.web.app'; // Live Firebase Hosting domain
+
     let productName = "Cart Purchase";
     if (Array.isArray(cart) && cart.length > 0) {
       productName = cart.map((item) => `${item.name} x${item.qty}`).join(", ");
@@ -27,9 +36,9 @@ expressApp.post("/create-payment", async (req, res) => {
 
     const orderId = `ORDER-${Date.now()}`;
 
-    // Corrected URLs with {LowProfileId} placeholder (CardCom will replace it)
-    const successUrl = "https://paymentpage-2f2d9.web.app/success?LowProfileId={LowProfileId}";
-    const failedUrl = "https://paymentpage-2f2d9.web.app/error?LowProfileId={LowProfileId}";
+    // 👇️ Use the dynamic frontendHost for redirects
+    const successUrl = `${frontendHost}/success?LowProfileId={LowProfileId}`;
+    const failedUrl = `${frontendHost}/error?LowProfileId={LowProfileId}`;
 
     const payload = {
       TerminalNumber: TERMINAL_NUMBER.value(),
@@ -40,8 +49,8 @@ expressApp.post("/create-payment", async (req, res) => {
       ProductName: productName,
       ReturnValue: orderId,
       Language: "he",
-      SuccessRedirectUrl: successUrl,
-      FailedRedirectUrl: failedUrl,
+      SuccessRedirectUrl: successUrl, // Dynamic URL
+      FailedRedirectUrl: failedUrl,   // Dynamic URL
     };
 
     logger.info("➡️ Sending payload to Cardcom:", payload);
@@ -59,7 +68,7 @@ expressApp.post("/create-payment", async (req, res) => {
     logger.info("✅ Cardcom response for Create:", data);
 
     res.json({
-      url: data.Url,             // payment page URL
+      url: data.Url, // payment page URL
       lowProfileId: data.LowProfileId, // real LowProfileId
       orderId,
       raw: data,

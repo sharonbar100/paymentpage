@@ -3,14 +3,21 @@ import { CartContext } from "../context/CartContext";
 import styles from "./Checkout.module.css";
 import { toast } from "react-toastify";
 
+// Helper for checking the environment
+const isLocalhost = window.location.hostname === "localhost";
+
 function Checkout() {
   const { cart } = useContext(CartContext);
   const [paymentUrl, setPaymentUrl] = useState(null);
   const [loadingPayment, setLoadingPayment] = useState(false);
 
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-  const functionUrl =
-    "https://us-central1-paymentpage-2f2d9.cloudfunctions.net/app";
+  
+  // 👇️ CRITICAL CHANGE: Conditional URL for local testing
+  const functionUrl = isLocalhost
+    ? "http://localhost:5001/paymentpage-2f2d9/us-central1/app"
+    : "https://us-central1-paymentpage-2f2d9.cloudfunctions.net/app";
+  // 👆️ CRITICAL CHANGE: Conditional URL for local testing
 
   const handlePayment = async () => {
     if (cart.length === 0) {
@@ -43,10 +50,11 @@ function Checkout() {
   };
 
   useEffect(() => {
-    if (cart.length > 0) {
+    // Only call handlePayment if the cart is not empty and we haven't already generated a URL
+    if (cart.length > 0 && !paymentUrl) {
       handlePayment();
     }
-  }, []); // run once on mount
+  }, [cart]); // Run when the cart changes
 
   return (
     <div className={styles.checkoutContainer}>
